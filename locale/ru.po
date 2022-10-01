@@ -74,13 +74,16 @@ msgid ""
 "%d address pins, %d rgb pins and %d tiles indicate a height of %d, not %d"
 msgstr "%d адресные пины, %d rgb пины и %d плитки указывают высоту %d а не %d"
 
+#: ports/atmel-samd/common-hal/alarm/__init__.c
 #: ports/cxd56/common-hal/analogio/AnalogOut.c ports/cxd56/common-hal/rtc/RTC.c
 #: ports/espressif/common-hal/rtc/RTC.c
 #: ports/mimxrt10xx/common-hal/analogio/AnalogOut.c
-#: ports/mimxrt10xx/common-hal/rtc/RTC.c
+#: ports/mimxrt10xx/common-hal/rtc/RTC.c ports/nrf/common-hal/alarm/__init__.c
 #: ports/nrf/common-hal/analogio/AnalogOut.c ports/nrf/common-hal/rtc/RTC.c
+#: ports/raspberrypi/common-hal/alarm/__init__.c
 #: ports/raspberrypi/common-hal/analogio/AnalogOut.c
-#: ports/raspberrypi/common-hal/rtc/RTC.c ports/stm/common-hal/rtc/RTC.c
+#: ports/raspberrypi/common-hal/rtc/RTC.c ports/stm/common-hal/alarm/__init__.c
+#: ports/stm/common-hal/rtc/RTC.c
 msgid "%q"
 msgstr ""
 
@@ -100,6 +103,7 @@ msgstr "%q содержит пины-дупликаты"
 msgid "%q failure: %d"
 msgstr "%q сбой: %d"
 
+#: shared-bindings/digitalio/DigitalInOut.c
 #: shared-bindings/microcontroller/Pin.c
 msgid "%q in use"
 msgstr "%q используется"
@@ -163,6 +167,11 @@ msgstr "%q должен быть >= 0"
 #: shared-bindings/vectorio/Circle.c shared-bindings/vectorio/Rectangle.c
 msgid "%q must be >= 1"
 msgstr "%q должен быть >= 1"
+
+#: shared-bindings/analogbufio/BufferedIn.c
+#: shared-bindings/audiocore/RawSample.c
+msgid "%q must be a bytearray or array of type 'h', 'H', 'b', or 'B'"
+msgstr ""
 
 #: py/argcheck.c
 msgid "%q must be a string"
@@ -302,7 +311,7 @@ msgstr "Объект '%s' не поддерживает присвоение э�
 msgid "'%s' object doesn't support item deletion"
 msgstr "Объект '%s' не поддерживает удаление элементов"
 
-#: py/runtime.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c py/runtime.c
 msgid "'%s' object has no attribute '%q'"
 msgstr "Объект '%s' не имеет атрибута '%q'"
 
@@ -488,6 +497,7 @@ msgid "Already running"
 msgstr "Уже запущен"
 
 #: ports/espressif/common-hal/wifi/Radio.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c
 msgid "Already scanning for wifi networks"
 msgstr "Поиск сетей wifi уже происходит"
 
@@ -927,14 +937,19 @@ msgstr "Ошибка: Сбой привязки"
 
 #: ports/raspberrypi/bindings/rp2pio/StateMachine.c py/enum.c
 #: shared-bindings/_bleio/__init__.c shared-bindings/aesio/aes.c
-#: shared-bindings/busio/SPI.c shared-bindings/microcontroller/Pin.c
+#: shared-bindings/alarm/__init__.c shared-bindings/busio/SPI.c
+#: shared-bindings/microcontroller/Pin.c
 #: shared-bindings/neopixel_write/__init__.c
 msgid "Expected a %q"
 msgstr "Ожидалось(ся) %q"
 
+#: ports/raspberrypi/bindings/cyw43/__init__.c
+msgid "Expected a %q or %q"
+msgstr ""
+
 #: shared-bindings/alarm/__init__.c
-msgid "Expected an alarm"
-msgstr "Ожидался сигнал"
+msgid "Expected an %q"
+msgstr ""
 
 #: ports/espressif/common-hal/_bleio/Adapter.c
 #: ports/nrf/common-hal/_bleio/Adapter.c
@@ -1204,7 +1219,7 @@ msgstr "Внутренняя ошибка #%d"
 msgid "Internal watchdog timer expired."
 msgstr ""
 
-#: py/argcheck.c
+#: py/argcheck.c shared-bindings/digitalio/DigitalInOut.c
 msgid "Invalid %q"
 msgstr "Недопустимый %q"
 
@@ -2243,6 +2258,11 @@ msgstr ""
 msgid "Unknown system firmware error: %d"
 msgstr ""
 
+#: ports/raspberrypi/common-hal/wifi/__init__.c
+#, c-format
+msgid "Unkown error code %d"
+msgstr ""
+
 #: shared-bindings/adafruit_pixelbuf/PixelBuf.c
 #, c-format
 msgid "Unmatched number of items on RHS (expected %d, got %d)."
@@ -2566,8 +2586,7 @@ msgstr ""
 msgid "can't cancel self"
 msgstr ""
 
-#: py/obj.c py/objint.c shared-bindings/i2ctarget/I2CTarget.c
-#: shared-module/adafruit_pixelbuf/PixelBuf.c
+#: py/obj.c py/objint.c shared-module/adafruit_pixelbuf/PixelBuf.c
 msgid "can't convert %q to %q"
 msgstr ""
 
@@ -2754,10 +2773,6 @@ msgstr ""
 msgid "color must be between 0x000000 and 0xffffff"
 msgstr ""
 
-#: shared-bindings/displayio/ColorConverter.c
-msgid "color should be an int"
-msgstr ""
-
 #: py/emitnative.c
 msgid "comparison of int and uint"
 msgstr ""
@@ -2907,10 +2922,6 @@ msgstr ""
 
 #: py/objstr.c
 msgid "end of format while looking for conversion specifier"
-msgstr ""
-
-#: shared-bindings/displayio/Shape.c
-msgid "end_x should be an int"
 msgstr ""
 
 #: shared-bindings/alarm/time/TimeAlarm.c
@@ -3779,10 +3790,6 @@ msgstr ""
 msgid "palette must be 32 bytes long"
 msgstr ""
 
-#: shared-bindings/displayio/Palette.c
-msgid "palette_index should be an int"
-msgstr ""
-
 #: py/emitinlinextensa.c
 msgid "parameters must be registers in sequence a2 to a5"
 msgstr ""
@@ -3847,6 +3854,7 @@ msgstr ""
 #: ports/espressif/boards/adafruit_qtpy_esp32c3/mpconfigboard.h
 #: ports/espressif/boards/beetle-esp32-c3/mpconfigboard.h
 #: ports/espressif/boards/lolin_c3_mini/mpconfigboard.h
+#: ports/espressif/boards/microdev_micro_c3/mpconfigboard.h
 #: supervisor/shared/safe_mode.c
 msgid "pressing boot button at start up.\n"
 msgstr ""
@@ -3916,12 +3924,6 @@ msgstr ""
 
 #: py/objstr.c
 msgid "rsplit(None,n)"
-msgstr ""
-
-#: shared-bindings/audiocore/RawSample.c
-msgid ""
-"sample_source buffer must be a bytearray or array of type 'h', 'H', 'b' or "
-"'B'"
 msgstr ""
 
 #: ports/atmel-samd/common-hal/audiobusio/PDMIn.c
@@ -4023,10 +4025,6 @@ msgstr ""
 
 #: py/objstr.c
 msgid "start/end indices"
-msgstr ""
-
-#: shared-bindings/displayio/Shape.c
-msgid "start_x should be an int"
 msgstr ""
 
 #: shared-bindings/random/__init__.c
@@ -4177,12 +4175,8 @@ msgstr ""
 msgid "type is not an acceptable base type"
 msgstr ""
 
-#: py/runtime.c
+#: py/objgenerator.c py/runtime.c
 msgid "type object '%q' has no attribute '%q'"
-msgstr ""
-
-#: py/objgenerator.c
-msgid "type object 'generator' has no attribute '__await__'"
 msgstr ""
 
 #: py/objtype.c
@@ -4243,7 +4237,6 @@ msgid "unreadable attribute"
 msgstr ""
 
 #: shared-bindings/displayio/TileGrid.c shared-bindings/vectorio/VectorShape.c
-#: shared-module/vectorio/Polygon.c shared-module/vectorio/VectorShape.c
 msgid "unsupported %q type"
 msgstr ""
 
@@ -4316,7 +4309,12 @@ msgid "width must be greater than zero"
 msgstr ""
 
 #: ports/espressif/common-hal/wifi/Radio.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c
 msgid "wifi is not enabled"
+msgstr ""
+
+#: ports/raspberrypi/common-hal/wifi/Monitor.c
+msgid "wifi.Monitor not available"
 msgstr ""
 
 #: shared-bindings/_bleio/Adapter.c
@@ -4373,10 +4371,6 @@ msgstr ""
 msgid "xTaskCreate failed"
 msgstr ""
 
-#: shared-bindings/displayio/Shape.c
-msgid "y should be an int"
-msgstr ""
-
 #: shared-module/displayio/Shape.c
 msgid "y value out of bounds"
 msgstr ""
@@ -4396,6 +4390,9 @@ msgstr "zi должно быть типа float"
 #: extmod/ulab/code/scipy/signal/signal.c
 msgid "zi must be of shape (n_section, 2)"
 msgstr "zi должен иметь форму (n_section, 2)"
+
+#~ msgid "Expected an alarm"
+#~ msgstr "Ожидался сигнал"
 
 #~ msgid "Failed to init wifi"
 #~ msgstr "Не удалось инициировать wifi"

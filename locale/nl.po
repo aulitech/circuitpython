@@ -69,13 +69,16 @@ msgid ""
 "%d address pins, %d rgb pins and %d tiles indicate a height of %d, not %d"
 msgstr ""
 
+#: ports/atmel-samd/common-hal/alarm/__init__.c
 #: ports/cxd56/common-hal/analogio/AnalogOut.c ports/cxd56/common-hal/rtc/RTC.c
 #: ports/espressif/common-hal/rtc/RTC.c
 #: ports/mimxrt10xx/common-hal/analogio/AnalogOut.c
-#: ports/mimxrt10xx/common-hal/rtc/RTC.c
+#: ports/mimxrt10xx/common-hal/rtc/RTC.c ports/nrf/common-hal/alarm/__init__.c
 #: ports/nrf/common-hal/analogio/AnalogOut.c ports/nrf/common-hal/rtc/RTC.c
+#: ports/raspberrypi/common-hal/alarm/__init__.c
 #: ports/raspberrypi/common-hal/analogio/AnalogOut.c
-#: ports/raspberrypi/common-hal/rtc/RTC.c ports/stm/common-hal/rtc/RTC.c
+#: ports/raspberrypi/common-hal/rtc/RTC.c ports/stm/common-hal/alarm/__init__.c
+#: ports/stm/common-hal/rtc/RTC.c
 msgid "%q"
 msgstr ""
 
@@ -95,6 +98,7 @@ msgstr ""
 msgid "%q failure: %d"
 msgstr "%q fout: %d"
 
+#: shared-bindings/digitalio/DigitalInOut.c
 #: shared-bindings/microcontroller/Pin.c
 msgid "%q in use"
 msgstr "%q in gebruik"
@@ -158,6 +162,11 @@ msgstr "%q moet >= 0 zijn"
 #: shared-bindings/vectorio/Circle.c shared-bindings/vectorio/Rectangle.c
 msgid "%q must be >= 1"
 msgstr "%q moet >= 1 zijn"
+
+#: shared-bindings/analogbufio/BufferedIn.c
+#: shared-bindings/audiocore/RawSample.c
+msgid "%q must be a bytearray or array of type 'h', 'H', 'b', or 'B'"
+msgstr ""
 
 #: py/argcheck.c
 msgid "%q must be a string"
@@ -297,7 +306,7 @@ msgstr ""
 msgid "'%s' object doesn't support item deletion"
 msgstr ""
 
-#: py/runtime.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c py/runtime.c
 msgid "'%s' object has no attribute '%q'"
 msgstr "'%s' object heeft geen attribuut '%q'"
 
@@ -483,6 +492,7 @@ msgid "Already running"
 msgstr "Wordt al uitgevoerd"
 
 #: ports/espressif/common-hal/wifi/Radio.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c
 msgid "Already scanning for wifi networks"
 msgstr "Zoekt al naar WiFi netwerken"
 
@@ -910,14 +920,19 @@ msgstr ""
 
 #: ports/raspberrypi/bindings/rp2pio/StateMachine.c py/enum.c
 #: shared-bindings/_bleio/__init__.c shared-bindings/aesio/aes.c
-#: shared-bindings/busio/SPI.c shared-bindings/microcontroller/Pin.c
+#: shared-bindings/alarm/__init__.c shared-bindings/busio/SPI.c
+#: shared-bindings/microcontroller/Pin.c
 #: shared-bindings/neopixel_write/__init__.c
 msgid "Expected a %q"
 msgstr "Verwacht een %q"
 
+#: ports/raspberrypi/bindings/cyw43/__init__.c
+msgid "Expected a %q or %q"
+msgstr ""
+
 #: shared-bindings/alarm/__init__.c
-msgid "Expected an alarm"
-msgstr "Verwachtte een alarm"
+msgid "Expected an %q"
+msgstr ""
 
 #: ports/espressif/common-hal/_bleio/Adapter.c
 #: ports/nrf/common-hal/_bleio/Adapter.c
@@ -1179,7 +1194,7 @@ msgstr "Interne fout #%d"
 msgid "Internal watchdog timer expired."
 msgstr ""
 
-#: py/argcheck.c
+#: py/argcheck.c shared-bindings/digitalio/DigitalInOut.c
 msgid "Invalid %q"
 msgstr "Ongeldige %q"
 
@@ -2218,6 +2233,11 @@ msgstr ""
 msgid "Unknown system firmware error: %d"
 msgstr ""
 
+#: ports/raspberrypi/common-hal/wifi/__init__.c
+#, c-format
+msgid "Unkown error code %d"
+msgstr ""
+
 #: shared-bindings/adafruit_pixelbuf/PixelBuf.c
 #, c-format
 msgid "Unmatched number of items on RHS (expected %d, got %d)."
@@ -2548,8 +2568,7 @@ msgstr "kan niet toewijzen aan expressie"
 msgid "can't cancel self"
 msgstr ""
 
-#: py/obj.c py/objint.c shared-bindings/i2ctarget/I2CTarget.c
-#: shared-module/adafruit_pixelbuf/PixelBuf.c
+#: py/obj.c py/objint.c shared-module/adafruit_pixelbuf/PixelBuf.c
 msgid "can't convert %q to %q"
 msgstr "kan %q niet naar %q converteren"
 
@@ -2736,10 +2755,6 @@ msgstr "kleurbuffer moet een bytearray of array van type 'b' of 'B' zijn"
 msgid "color must be between 0x000000 and 0xffffff"
 msgstr "kleur moet tussen 0x000000 en 0xffffff liggen"
 
-#: shared-bindings/displayio/ColorConverter.c
-msgid "color should be an int"
-msgstr "kleur moet een int zijn"
-
 #: py/emitnative.c
 msgid "comparison of int and uint"
 msgstr ""
@@ -2892,10 +2907,6 @@ msgstr "lege sequentie"
 #: py/objstr.c
 msgid "end of format while looking for conversion specifier"
 msgstr "einde van format terwijl zoekend naar conversie-specifier"
-
-#: shared-bindings/displayio/Shape.c
-msgid "end_x should be an int"
-msgstr "end_x moet een int zijn"
 
 #: shared-bindings/alarm/time/TimeAlarm.c
 msgid "epoch_time not supported on this board"
@@ -3767,10 +3778,6 @@ msgstr "pack verwachtte %d elementen (ontving %d)"
 msgid "palette must be 32 bytes long"
 msgstr "palette moet 32 bytes lang zijn"
 
-#: shared-bindings/displayio/Palette.c
-msgid "palette_index should be an int"
-msgstr "palette_index moet een int zijn"
-
 #: py/emitinlinextensa.c
 msgid "parameters must be registers in sequence a2 to a5"
 msgstr "parameters moeten registers zijn in de volgorde a2 tot a5"
@@ -3835,6 +3842,7 @@ msgstr ""
 #: ports/espressif/boards/adafruit_qtpy_esp32c3/mpconfigboard.h
 #: ports/espressif/boards/beetle-esp32-c3/mpconfigboard.h
 #: ports/espressif/boards/lolin_c3_mini/mpconfigboard.h
+#: ports/espressif/boards/microdev_micro_c3/mpconfigboard.h
 #: supervisor/shared/safe_mode.c
 msgid "pressing boot button at start up.\n"
 msgstr "druk bootknop in bij opstarten.\n"
@@ -3905,14 +3913,6 @@ msgstr "roll argument moet een ndarray zijn"
 #: py/objstr.c
 msgid "rsplit(None,n)"
 msgstr "rsplit(None,n)"
-
-#: shared-bindings/audiocore/RawSample.c
-msgid ""
-"sample_source buffer must be a bytearray or array of type 'h', 'H', 'b' or "
-"'B'"
-msgstr ""
-"sample_source buffer moet een bytearray of array van type 'h', 'H', 'b' of "
-"'B' zijn"
 
 #: ports/atmel-samd/common-hal/audiobusio/PDMIn.c
 #: ports/raspberrypi/common-hal/audiobusio/PDMIn.c
@@ -4014,10 +4014,6 @@ msgstr ""
 #: py/objstr.c
 msgid "start/end indices"
 msgstr "start/stop indices"
-
-#: shared-bindings/displayio/Shape.c
-msgid "start_x should be an int"
-msgstr "start_x moet een int zijn"
 
 #: shared-bindings/random/__init__.c
 msgid "step must be non-zero"
@@ -4167,13 +4163,9 @@ msgstr "type '%q' is geen aanvaardbaar basistype"
 msgid "type is not an acceptable base type"
 msgstr "type is geen aanvaardbaar basistype"
 
-#: py/runtime.c
+#: py/objgenerator.c py/runtime.c
 msgid "type object '%q' has no attribute '%q'"
 msgstr "objecttype '%q' heeft geen attribuut '%q'"
-
-#: py/objgenerator.c
-msgid "type object 'generator' has no attribute '__await__'"
-msgstr "het type object 'generator' heeft geen attribuut '__await__'"
 
 #: py/objtype.c
 msgid "type takes 1 or 3 arguments"
@@ -4233,7 +4225,6 @@ msgid "unreadable attribute"
 msgstr "onleesbaar attribuut"
 
 #: shared-bindings/displayio/TileGrid.c shared-bindings/vectorio/VectorShape.c
-#: shared-module/vectorio/Polygon.c shared-module/vectorio/VectorShape.c
 msgid "unsupported %q type"
 msgstr "niet ondersteund %q type"
 
@@ -4306,7 +4297,12 @@ msgid "width must be greater than zero"
 msgstr "breedte moet groter dan nul zijn"
 
 #: ports/espressif/common-hal/wifi/Radio.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c
 msgid "wifi is not enabled"
+msgstr ""
+
+#: ports/raspberrypi/common-hal/wifi/Monitor.c
+msgid "wifi.Monitor not available"
 msgstr ""
 
 #: shared-bindings/_bleio/Adapter.c
@@ -4363,10 +4359,6 @@ msgstr "x-waarde buiten bereik"
 msgid "xTaskCreate failed"
 msgstr ""
 
-#: shared-bindings/displayio/Shape.c
-msgid "y should be an int"
-msgstr "y moet een int zijn"
-
 #: shared-module/displayio/Shape.c
 msgid "y value out of bounds"
 msgstr "y-waarde buiten bereik"
@@ -4386,6 +4378,34 @@ msgstr "zi moet van type float zijn"
 #: extmod/ulab/code/scipy/signal/signal.c
 msgid "zi must be of shape (n_section, 2)"
 msgstr "zi moet vorm (n_section, 2) hebben"
+
+#~ msgid "type object 'generator' has no attribute '__await__'"
+#~ msgstr "het type object 'generator' heeft geen attribuut '__await__'"
+
+#~ msgid "color should be an int"
+#~ msgstr "kleur moet een int zijn"
+
+#~ msgid "end_x should be an int"
+#~ msgstr "end_x moet een int zijn"
+
+#~ msgid "palette_index should be an int"
+#~ msgstr "palette_index moet een int zijn"
+
+#~ msgid "start_x should be an int"
+#~ msgstr "start_x moet een int zijn"
+
+#~ msgid "y should be an int"
+#~ msgstr "y moet een int zijn"
+
+#~ msgid ""
+#~ "sample_source buffer must be a bytearray or array of type 'h', 'H', 'b' "
+#~ "or 'B'"
+#~ msgstr ""
+#~ "sample_source buffer moet een bytearray of array van type 'h', 'H', 'b' "
+#~ "of 'B' zijn"
+
+#~ msgid "Expected an alarm"
+#~ msgstr "Verwachtte een alarm"
 
 #~ msgid "Failed to init wifi"
 #~ msgstr "Kon WiFi niet initialiseren"

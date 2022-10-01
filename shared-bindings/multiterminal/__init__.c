@@ -35,7 +35,6 @@
 //| The `multiterminal` module allows you to configure an additional serial
 //| terminal source. Incoming characters are accepted from both the internal
 //| serial connection and the optional secondary connection."""
-//|
 
 //| def get_secondary_terminal() -> Optional[typing.BinaryIO]:
 //|     """Returns the current secondary terminal."""

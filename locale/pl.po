@@ -71,13 +71,16 @@ msgid ""
 "%d address pins, %d rgb pins and %d tiles indicate a height of %d, not %d"
 msgstr ""
 
+#: ports/atmel-samd/common-hal/alarm/__init__.c
 #: ports/cxd56/common-hal/analogio/AnalogOut.c ports/cxd56/common-hal/rtc/RTC.c
 #: ports/espressif/common-hal/rtc/RTC.c
 #: ports/mimxrt10xx/common-hal/analogio/AnalogOut.c
-#: ports/mimxrt10xx/common-hal/rtc/RTC.c
+#: ports/mimxrt10xx/common-hal/rtc/RTC.c ports/nrf/common-hal/alarm/__init__.c
 #: ports/nrf/common-hal/analogio/AnalogOut.c ports/nrf/common-hal/rtc/RTC.c
+#: ports/raspberrypi/common-hal/alarm/__init__.c
 #: ports/raspberrypi/common-hal/analogio/AnalogOut.c
-#: ports/raspberrypi/common-hal/rtc/RTC.c ports/stm/common-hal/rtc/RTC.c
+#: ports/raspberrypi/common-hal/rtc/RTC.c ports/stm/common-hal/alarm/__init__.c
+#: ports/stm/common-hal/rtc/RTC.c
 msgid "%q"
 msgstr ""
 
@@ -97,6 +100,7 @@ msgstr ""
 msgid "%q failure: %d"
 msgstr "%q niepowodzenie: %d"
 
+#: shared-bindings/digitalio/DigitalInOut.c
 #: shared-bindings/microcontroller/Pin.c
 msgid "%q in use"
 msgstr "%q w użyciu"
@@ -160,6 +164,11 @@ msgstr "%q musi być >= 0"
 #: shared-bindings/vectorio/Circle.c shared-bindings/vectorio/Rectangle.c
 msgid "%q must be >= 1"
 msgstr "%q musi być >= 1"
+
+#: shared-bindings/analogbufio/BufferedIn.c
+#: shared-bindings/audiocore/RawSample.c
+msgid "%q must be a bytearray or array of type 'h', 'H', 'b', or 'B'"
+msgstr ""
 
 #: py/argcheck.c
 msgid "%q must be a string"
@@ -299,7 +308,7 @@ msgstr ""
 msgid "'%s' object doesn't support item deletion"
 msgstr ""
 
-#: py/runtime.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c py/runtime.c
 msgid "'%s' object has no attribute '%q'"
 msgstr "'%s' obiekt nie ma atrybutu '%q'"
 
@@ -485,6 +494,7 @@ msgid "Already running"
 msgstr ""
 
 #: ports/espressif/common-hal/wifi/Radio.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c
 msgid "Already scanning for wifi networks"
 msgstr ""
 
@@ -911,13 +921,18 @@ msgstr ""
 
 #: ports/raspberrypi/bindings/rp2pio/StateMachine.c py/enum.c
 #: shared-bindings/_bleio/__init__.c shared-bindings/aesio/aes.c
-#: shared-bindings/busio/SPI.c shared-bindings/microcontroller/Pin.c
+#: shared-bindings/alarm/__init__.c shared-bindings/busio/SPI.c
+#: shared-bindings/microcontroller/Pin.c
 #: shared-bindings/neopixel_write/__init__.c
 msgid "Expected a %q"
 msgstr "Oczekiwano %q"
 
+#: ports/raspberrypi/bindings/cyw43/__init__.c
+msgid "Expected a %q or %q"
+msgstr ""
+
 #: shared-bindings/alarm/__init__.c
-msgid "Expected an alarm"
+msgid "Expected an %q"
 msgstr ""
 
 #: ports/espressif/common-hal/_bleio/Adapter.c
@@ -1179,7 +1194,7 @@ msgstr "Błąd wewnętrzny #%d"
 msgid "Internal watchdog timer expired."
 msgstr ""
 
-#: py/argcheck.c
+#: py/argcheck.c shared-bindings/digitalio/DigitalInOut.c
 msgid "Invalid %q"
 msgstr "Nieprawidłowe %q"
 
@@ -2205,6 +2220,11 @@ msgstr ""
 msgid "Unknown system firmware error: %d"
 msgstr ""
 
+#: ports/raspberrypi/common-hal/wifi/__init__.c
+#, c-format
+msgid "Unkown error code %d"
+msgstr ""
+
 #: shared-bindings/adafruit_pixelbuf/PixelBuf.c
 #, c-format
 msgid "Unmatched number of items on RHS (expected %d, got %d)."
@@ -2528,8 +2548,7 @@ msgstr "przypisanie do wyrażenia"
 msgid "can't cancel self"
 msgstr ""
 
-#: py/obj.c py/objint.c shared-bindings/i2ctarget/I2CTarget.c
-#: shared-module/adafruit_pixelbuf/PixelBuf.c
+#: py/obj.c py/objint.c shared-module/adafruit_pixelbuf/PixelBuf.c
 msgid "can't convert %q to %q"
 msgstr "nie można dokonać konwersji %q na %q"
 
@@ -2716,10 +2735,6 @@ msgstr "bufor kolorów musi być bytearray lub tablicą typu 'b' lub 'B'"
 msgid "color must be between 0x000000 and 0xffffff"
 msgstr "kolor musi być pomiędzy 0x000000 a 0xffffff"
 
-#: shared-bindings/displayio/ColorConverter.c
-msgid "color should be an int"
-msgstr "kolor powinien być liczbą całkowitą"
-
 #: py/emitnative.c
 msgid "comparison of int and uint"
 msgstr ""
@@ -2871,10 +2886,6 @@ msgstr "pusta sekwencja"
 #: py/objstr.c
 msgid "end of format while looking for conversion specifier"
 msgstr "koniec formatu przy szukaniu specyfikacji konwersji"
-
-#: shared-bindings/displayio/Shape.c
-msgid "end_x should be an int"
-msgstr "end_x powinien być całkowity"
 
 #: shared-bindings/alarm/time/TimeAlarm.c
 msgid "epoch_time not supported on this board"
@@ -3742,10 +3753,6 @@ msgstr ""
 msgid "palette must be 32 bytes long"
 msgstr "paleta musi mieć 32 bajty długości"
 
-#: shared-bindings/displayio/Palette.c
-msgid "palette_index should be an int"
-msgstr "palette_index powinien być całkowity"
-
 #: py/emitinlinextensa.c
 msgid "parameters must be registers in sequence a2 to a5"
 msgstr "parametry muszą być rejestrami w kolejności a2 do a5"
@@ -3811,6 +3818,7 @@ msgstr ""
 #: ports/espressif/boards/adafruit_qtpy_esp32c3/mpconfigboard.h
 #: ports/espressif/boards/beetle-esp32-c3/mpconfigboard.h
 #: ports/espressif/boards/lolin_c3_mini/mpconfigboard.h
+#: ports/espressif/boards/microdev_micro_c3/mpconfigboard.h
 #: supervisor/shared/safe_mode.c
 msgid "pressing boot button at start up.\n"
 msgstr ""
@@ -3881,13 +3889,6 @@ msgstr ""
 #: py/objstr.c
 msgid "rsplit(None,n)"
 msgstr "rsplit(None,n)"
-
-#: shared-bindings/audiocore/RawSample.c
-msgid ""
-"sample_source buffer must be a bytearray or array of type 'h', 'H', 'b' or "
-"'B'"
-msgstr ""
-"bufor sample_source musi być bytearray lub tablicą typu 'h', 'H', 'b' lub 'B'"
 
 #: ports/atmel-samd/common-hal/audiobusio/PDMIn.c
 #: ports/raspberrypi/common-hal/audiobusio/PDMIn.c
@@ -3989,10 +3990,6 @@ msgstr ""
 #: py/objstr.c
 msgid "start/end indices"
 msgstr "początkowe/końcowe indeksy"
-
-#: shared-bindings/displayio/Shape.c
-msgid "start_x should be an int"
-msgstr "start_x powinien być całkowity"
 
 #: shared-bindings/random/__init__.c
 msgid "step must be non-zero"
@@ -4142,13 +4139,9 @@ msgstr "typ '%q' nie może być bazowy"
 msgid "type is not an acceptable base type"
 msgstr "typ nie może być bazowy"
 
-#: py/runtime.c
+#: py/objgenerator.c py/runtime.c
 msgid "type object '%q' has no attribute '%q'"
 msgstr "typ '%q' nie ma atrybutu '%q'"
-
-#: py/objgenerator.c
-msgid "type object 'generator' has no attribute '__await__'"
-msgstr ""
 
 #: py/objtype.c
 msgid "type takes 1 or 3 arguments"
@@ -4208,7 +4201,6 @@ msgid "unreadable attribute"
 msgstr "nieczytelny atrybut"
 
 #: shared-bindings/displayio/TileGrid.c shared-bindings/vectorio/VectorShape.c
-#: shared-module/vectorio/Polygon.c shared-module/vectorio/VectorShape.c
 msgid "unsupported %q type"
 msgstr "zły typ %q"
 
@@ -4281,7 +4273,12 @@ msgid "width must be greater than zero"
 msgstr "szerokość musi być większa niż zero"
 
 #: ports/espressif/common-hal/wifi/Radio.c
+#: ports/raspberrypi/common-hal/wifi/Radio.c
 msgid "wifi is not enabled"
+msgstr ""
+
+#: ports/raspberrypi/common-hal/wifi/Monitor.c
+msgid "wifi.Monitor not available"
 msgstr ""
 
 #: shared-bindings/_bleio/Adapter.c
@@ -4338,10 +4335,6 @@ msgstr "x poza zakresem"
 msgid "xTaskCreate failed"
 msgstr ""
 
-#: shared-bindings/displayio/Shape.c
-msgid "y should be an int"
-msgstr "y powinno być całkowite"
-
 #: shared-module/displayio/Shape.c
 msgid "y value out of bounds"
 msgstr "y poza zakresem"
@@ -4361,6 +4354,28 @@ msgstr ""
 #: extmod/ulab/code/scipy/signal/signal.c
 msgid "zi must be of shape (n_section, 2)"
 msgstr ""
+
+#~ msgid "color should be an int"
+#~ msgstr "kolor powinien być liczbą całkowitą"
+
+#~ msgid "end_x should be an int"
+#~ msgstr "end_x powinien być całkowity"
+
+#~ msgid "palette_index should be an int"
+#~ msgstr "palette_index powinien być całkowity"
+
+#~ msgid "start_x should be an int"
+#~ msgstr "start_x powinien być całkowity"
+
+#~ msgid "y should be an int"
+#~ msgstr "y powinno być całkowite"
+
+#~ msgid ""
+#~ "sample_source buffer must be a bytearray or array of type 'h', 'H', 'b' "
+#~ "or 'B'"
+#~ msgstr ""
+#~ "bufor sample_source musi być bytearray lub tablicą typu 'h', 'H', 'b' lub "
+#~ "'B'"
 
 #~ msgid "%q must be a tuple of length 2"
 #~ msgstr "%q musi być krotką o długości 2"

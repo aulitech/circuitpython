@@ -33,9 +33,7 @@ BASE_CFLAGS = \
 	-Wdouble-promotion \
 	-Wimplicit-fallthrough=2 \
 	-Wno-endif-labels \
-	-Wstrict-prototypes \
 	-Werror-implicit-function-declaration \
-	-Wfloat-equal \
 	-Wundef \
 	-Wshadow \
 	-Wwrite-strings \
@@ -53,6 +51,17 @@ BASE_CFLAGS = \
 	-DCIRCUITPY_SAFE_RESTART_WORD=0xDEADBEEF \
 	-DCIRCUITPY_BOARD_ID="\"$(BOARD)\"" \
 	--param max-inline-insns-single=500
+
+ifeq ($(AULITECH_NEUTONML),1)
+BASE_CFLAGS += \
+	-Wno-strict-prototypes \
+	-Wno-missing-prototypes \
+	-Wno-float-equal
+else
+	-Wstrict-prototypes \
+	-Wmissing-prototypes \
+	-Wfloat-equal
+endif
 
 #        Use these flags to debug build times and header includes.
 #        -ftime-report
@@ -108,6 +117,9 @@ SRC_PATTERNS += aesio/%
 endif
 ifeq ($(CIRCUITPY_ALARM),1)
 SRC_PATTERNS += alarm/%
+endif
+ifeq ($(CIRCUITPY_ANALOGBUFIO),1)
+SRC_PATTERNS += analogbufio/%
 endif
 ifeq ($(CIRCUITPY_ANALOGIO),1)
 SRC_PATTERNS += analogio/%
@@ -166,6 +178,9 @@ SRC_PATTERNS += canio/%
 endif
 ifeq ($(CIRCUITPY_COUNTIO),1)
 SRC_PATTERNS += countio/%
+endif
+ifeq ($(CIRCUITPY_CYW43),1)
+SRC_PATTERNS += cyw43/%
 endif
 ifeq ($(CIRCUITPY_DIGITALIO),1)
 SRC_PATTERNS += digitalio/%
@@ -394,6 +409,8 @@ SRC_COMMON_HAL_ALL = \
 	alarm/pin/PinAlarm.c \
 	alarm/time/TimeAlarm.c \
 	alarm/touch/TouchAlarm.c \
+	analogbufio/BufferedIn.c \
+	analogbufio/__init__.c \
 	analogio/AnalogIn.c \
 	analogio/AnalogOut.c \
 	analogio/__init__.c \
@@ -483,7 +500,6 @@ SRC_C += \
 	common-hal/_bleio/hci.c \
 
 endif
-
 
 SRC_COMMON_HAL = $(filter $(SRC_PATTERNS), $(SRC_COMMON_HAL_ALL))
 
