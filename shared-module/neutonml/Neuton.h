@@ -3,7 +3,7 @@
 
 #include "py/obj.h"
 #include "shared-bindings/neutonml/Neuton.h"
-#include "neuton.h"
+#include "lib/neuton/neuton/neuton.h"
 
 extern void shared_module_neutonml_neuton_construct(neutonml_neuton_obj_t *self);
 extern void shared_module_neutonml_neuton_deinit(neutonml_neuton_obj_t *self);
@@ -15,7 +15,7 @@ extern void shared_module_neutonml_neuton_model_set_ready_flag(neutonml_neuton_o
 extern input_t *shared_module_neutonml_neuton_model_get_inputs_ptr(neutonml_neuton_obj_t *self);
 extern void shared_module_neutonml_neuton_model_reset_inputs(neutonml_neuton_obj_t *self);
 extern uint16_t shared_module_neutonml_neuton_model_outputs_count(neutonml_neuton_obj_t *self);
-extern int8_t shared_module_neutonml_neuton_model_run_inference(neutonml_neuton_obj_t *self, uint16_t *index, float **outputs);
+extern int8_t shared_module_neutonml_neuton_model_run_inference(neutonml_neuton_obj_t *self);
 
 extern TaskType shared_module_neutonml_neuton_model_task_type(neutonml_neuton_obj_t *self);
 extern uint8_t shared_module_neutonml_neuton_model_quantization_level(neutonml_neuton_obj_t *self);

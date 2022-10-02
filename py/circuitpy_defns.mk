@@ -702,9 +702,17 @@ endif
 ifeq ($(AULITECH_NEUTONML),1)
 SRC_MOD += $(addprefix lib/neuton/neuton/, \
 	neuton.c \
+	dsp/fe/statistical/Common.c \
+	dsp/fe/statistical/DSPF32.c \
+	dsp/fht/fhtf32.c \
+	dsp/fht/fhtInitConst.c \
 )
 INC += -isystem $(TOP)/lib/neuton/neuton
 $(BUILD)/lib/neuton/neuton/neuton.o: CFLAGS += -include "py/misc.h" -D'MPDEC_ALLOCATOR(x)=m_malloc(x,0)' -D'MPDEC_FREE(x)=m_free(x)' -Wno-strict-prototypes -Wno-missing-prototypes -Wno-float-equal
+$(BUILD)/lib/neuton/neuton/dsp/fe/statistical/Common.o: CFLAGS += -include "py/misc.h" -D'MPDEC_ALLOCATOR(x)=m_malloc(x,0)' -D'MPDEC_FREE(x)=m_free(x)' -Wno-strict-prototypes -Wno-missing-prototypes -Wno-float-equal
+$(BUILD)/lib/neuton/neuton/dsp/fe/statistical/DSPF32.o: CFLAGS += -include "py/misc.h" -D'MPDEC_ALLOCATOR(x)=m_malloc(x,0)' -D'MPDEC_FREE(x)=m_free(x)' -Wno-strict-prototypes -Wno-missing-prototypes -Wno-float-equal -Wno-sign-compare
+$(BUILD)/lib/neuton/neuton/dsp/fht/fhtf32.o: CFLAGS += -include "py/misc.h" -D'MPDEC_ALLOCATOR(x)=m_malloc(x,0)' -D'MPDEC_FREE(x)=m_free(x)' -Wno-strict-prototypes -Wno-missing-prototypes -Wno-float-equal
+$(BUILD)/lib/neuton/neuton/dsp/fht/fhtInitConst.o: CFLAGS += -include "py/misc.h" -D'MPDEC_ALLOCATOR(x)=m_malloc(x,0)' -D'MPDEC_FREE(x)=m_free(x)' -Wno-strict-prototypes -Wno-missing-prototypes -Wno-float-equal
 endif
 
 ifeq ($(CIRCUITPY_RGBMATRIX),1)
