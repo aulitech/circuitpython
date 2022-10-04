@@ -8,15 +8,26 @@
 #include "py/runtime.h"
 #include "py/runtime0.h"
 #include "shared-bindings/util.h"
-#include "shared-module/neutonml/Neuton.h"
 #include "shared/runtime/context_manager_helpers.h"
 
 STATIC mp_obj_t neutonml_neuton_make_new(const mp_obj_type_t *type,
     size_t n_args, size_t n_kw,
-    const mp_obj_t *pos_args) {
+    const mp_obj_t *all_args) {
+    enum { ARG_lndex, ARG_outputs };
+    static const mp_arg_t allowed_args[] = {
+        {MP_QSTR_index, MP_ARG_OBJ | MP_ARG_REQUIRED},
+        {MP_QSTR_outputs, MP_ARG_OBJ | MP_ARG_REQUIRED},
+    };
+    mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
+    mp_arg_parse_all_kw_array(n_args, n_kw, all_args,
+        MP_ARRAY_SIZE(allowed_args), allowed_args, args);
+    mp_buffer_info_t bufinfo;
+    mp_get_buffer_raise(args[ARG_outputs].u_obj, &bufinfo, MP_BUFFER_READ);
+
     neutonml_neuton_obj_t *self = m_new_obj(neutonml_neuton_obj_t);
     self->base.type = &neutonml_neuton_type;
-    shared_module_neutonml_neuton_construct(self);
+    shared_module_neutonml_neuton_construct(self, (float *)bufinfo.buf,
+        bufinfo.len);
     return MP_OBJ_FROM_PTR(self);
 }
 
@@ -45,6 +56,8 @@ STATIC mp_obj_t neutonml_neuton_obj_get_inputs_count(mp_obj_t self_in) {
 }
 MP_DEFINE_CONST_FUN_OBJ_1(neutonml_neuton_get_inputs_count_obj,
     neutonml_neuton_obj_get_inputs_count);
+MP_PROPERTY_GETTER(neutonml_neuton_inputs_count_obj,
+    (mp_obj_t)&neutonml_neuton_get_inputs_count_obj);
 
 STATIC mp_obj_t neutonml_neuton_obj_set_inputs(mp_obj_t self_in,
     mp_obj_t inputs) {
@@ -102,6 +115,17 @@ STATIC mp_obj_t neutonml_neuton_obj_run_inference(mp_obj_t self_in) {
     uint16_t result;
 
     result = shared_module_neutonml_neuton_model_run_inference(self);
+    /*
+    STATIC const mp_rom_map_elem_t inference_table[] = {
+        {MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_inference)},
+        {MP_ROM_QSTR(MP_QSTR_result), MP_ROM_PTR(&result)},
+        {MP_ROM_QSTR(MP_QSTR_index), MP_ROM_PTR(&self->index)},
+        {MP_ROM_QSTR(MP_QSTR_outputs), MP_ROM_PTR(&self->outputs)},
+    };
+
+    MP_DEFINE_CONST_DICT(inference_result, inference_table);
+    return (mp_obj_t)inference_result;
+    */
     return mp_obj_new_int(result);
 }
 MP_DEFINE_CONST_FUN_OBJ_1(neutonml_neuton_run_inference_obj,
@@ -210,7 +234,7 @@ STATIC const mp_rom_map_elem_t neutonml_neuton_locals_dict_table[] = {
     {MP_ROM_QSTR(MP_QSTR___enter__), MP_ROM_PTR(&default___enter___obj)},
     {MP_ROM_QSTR(MP_QSTR___exit__), MP_ROM_PTR(&neutonml_neuton___exit___obj)},
     {MP_ROM_QSTR(MP_QSTR_get_inputs_count),
-     MP_ROM_PTR(&neutonml_neuton_get_inputs_count_obj)},
+     MP_ROM_PTR(&neutonml_neuton_inputs_count_obj)},
     {MP_ROM_QSTR(MP_QSTR_set_inputs),
      MP_ROM_PTR(&neutonml_neuton_set_inputs_obj)},
     {MP_ROM_QSTR(MP_QSTR_set_ready_flag),
@@ -247,7 +271,7 @@ STATIC MP_DEFINE_CONST_DICT(neutonml_neuton_locals_dict,
 
 const mp_obj_type_t neutonml_neuton_type = {
     {&mp_type_type},
-    .name = MP_QSTR_Meaning,
+    .name = MP_QSTR_Neuton,
     .make_new = neutonml_neuton_make_new,
     .locals_dict = (mp_obj_dict_t *)&neutonml_neuton_locals_dict,
 };

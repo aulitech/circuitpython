@@ -1,13 +1,14 @@
-#include "py/runtime.h"
 #include "shared-bindings/neutonml/Neuton.h"
+
+#include "py/runtime.h"
 #include "shared-module/neutonml/Neuton.h"
 
-
-void shared_module_neutonml_neuton_construct(neutonml_neuton_obj_t *self) {
+void shared_module_neutonml_neuton_construct(neutonml_neuton_obj_t *self,
+    float *outputs, size_t len) {
     self->deinited = 0;
     self->state = 0x00;
-    self->index = 0;
-    self->outputs = (float *)0;
+    self->length = len;
+    self->outputs = outputs;
 }
 
 bool shared_module_neutonml_neuton_deinited(neutonml_neuton_obj_t *self) {
@@ -85,9 +86,16 @@ uint16_t shared_module_neutonml_neuton_model_outputs_count(
 int8_t shared_module_neutonml_neuton_model_run_inference(
     neutonml_neuton_obj_t *self) {
     uint16_t result;
+    float *outputs;
+    int16_t index;
 
-    result = neuton_model_run_inference(&self->index, &self->outputs);
-    return result;
+    result = neuton_model_run_inference((uint16_t *)&index, &outputs);
+
+    for (int i = 0; i < self->length; i++) {
+        self->outputs[i] = outputs[i];
+    }
+
+    return (result == 0) ? index : (result > 0) ? -result : -1;
 }
 
 ///
