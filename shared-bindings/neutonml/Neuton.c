@@ -13,9 +13,8 @@
 STATIC mp_obj_t neutonml_neuton_make_new(const mp_obj_type_t *type,
     size_t n_args, size_t n_kw,
     const mp_obj_t *all_args) {
-    enum { ARG_lndex, ARG_outputs };
+    enum { ARG_outputs };
     static const mp_arg_t allowed_args[] = {
-        {MP_QSTR_index, MP_ARG_OBJ | MP_ARG_REQUIRED},
         {MP_QSTR_outputs, MP_ARG_OBJ | MP_ARG_REQUIRED},
     };
     mp_arg_val_t args[MP_ARRAY_SIZE(allowed_args)];
