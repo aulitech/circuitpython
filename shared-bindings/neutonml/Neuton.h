@@ -22,7 +22,7 @@ extern void shared_module_neutonml_neuton_model_reset_inputs(
     neutonml_neuton_obj_t *self);
 extern uint16_t shared_module_neutonml_neuton_model_outputs_count(
     neutonml_neuton_obj_t *self);
-extern int8_t shared_module_neutonml_neuton_model_run_inference(
+extern int32_t shared_module_neutonml_neuton_model_run_inference(
     neutonml_neuton_obj_t *self);
 
 extern TaskType shared_module_neutonml_neuton_model_task_type(

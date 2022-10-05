@@ -1,5 +1,7 @@
 #include "shared-bindings/neutonml/Neuton.h"
 
+#include <stdio.h>
+
 #include "py/runtime.h"
 #include "shared-module/neutonml/Neuton.h"
 
@@ -83,16 +85,16 @@ uint16_t shared_module_neutonml_neuton_model_outputs_count(
 /// \return Zero on successful prediction. Result > 0 - model not ready for
 /// prediction.
 ///
-int8_t shared_module_neutonml_neuton_model_run_inference(
+int32_t shared_module_neutonml_neuton_model_run_inference(
     neutonml_neuton_obj_t *self) {
     uint16_t result;
-    float *outputs;
+    float *f;
     int16_t index;
 
-    result = neuton_model_run_inference((uint16_t *)&index, &outputs);
+    result = neuton_model_run_inference((uint16_t *)&index, &f);
 
     for (int i = 0; i < self->length; i++) {
-        self->outputs[i] = outputs[i];
+        self->outputs[i] = f[i];
     }
 
     return (result == 0) ? index : (result > 0) ? -result : -1;

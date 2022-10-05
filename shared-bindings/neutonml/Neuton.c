@@ -1,6 +1,7 @@
 #include "shared-bindings/neutonml/Neuton.h"
 
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "py/obj.h"
@@ -25,6 +26,7 @@ STATIC mp_obj_t neutonml_neuton_make_new(const mp_obj_type_t *type,
 
     neutonml_neuton_obj_t *self = m_new_obj(neutonml_neuton_obj_t);
     self->base.type = &neutonml_neuton_type;
+
     shared_module_neutonml_neuton_construct(self, (float *)bufinfo.buf,
         bufinfo.len);
     return MP_OBJ_FROM_PTR(self);
@@ -114,17 +116,6 @@ STATIC mp_obj_t neutonml_neuton_obj_run_inference(mp_obj_t self_in) {
     uint16_t result;
 
     result = shared_module_neutonml_neuton_model_run_inference(self);
-    /*
-    STATIC const mp_rom_map_elem_t inference_table[] = {
-        {MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_inference)},
-        {MP_ROM_QSTR(MP_QSTR_result), MP_ROM_PTR(&result)},
-        {MP_ROM_QSTR(MP_QSTR_index), MP_ROM_PTR(&self->index)},
-        {MP_ROM_QSTR(MP_QSTR_outputs), MP_ROM_PTR(&self->outputs)},
-    };
-
-    MP_DEFINE_CONST_DICT(inference_result, inference_table);
-    return (mp_obj_t)inference_result;
-    */
     return mp_obj_new_int(result);
 }
 MP_DEFINE_CONST_FUN_OBJ_1(neutonml_neuton_run_inference_obj,
