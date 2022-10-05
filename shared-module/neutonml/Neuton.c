@@ -88,14 +88,23 @@ uint16_t shared_module_neutonml_neuton_model_outputs_count(
 int32_t shared_module_neutonml_neuton_model_run_inference(
     neutonml_neuton_obj_t *self) {
     uint16_t result;
-    float *f;
     int16_t index;
+    float *f;
+    float *o;
 
-    result = neuton_model_run_inference((uint16_t *)&index, &f);
+    f = self->outputs;
+    printf("Neuton: buffer before Inference [%f %f %f %f %f %f %f %f]",
+        (double)f[0], (double)f[1], (double)f[2], (double)f[3], (double)f[4],
+        (double)f[5], (double)f[6], (double)f[7]);
+
+    result = neuton_model_run_inference((uint16_t *)&index, &o);
 
     for (int i = 0; i < self->length; i++) {
-        self->outputs[i] = f[i];
+        self->outputs[i] = o[i];
     }
+    printf("Neuton: Inference result [%f %f %f %f %f %f %f %f]", (double)o[0],
+        (double)o[1], (double)o[2], (double)o[3], (double)o[4], (double)o[5],
+        (double)o[6], (double)o[7]);
 
     return (result == 0) ? index : (result > 0) ? -result : -1;
 }

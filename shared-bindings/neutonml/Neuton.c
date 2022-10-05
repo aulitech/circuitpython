@@ -27,6 +27,13 @@ STATIC mp_obj_t neutonml_neuton_make_new(const mp_obj_type_t *type,
     neutonml_neuton_obj_t *self = m_new_obj(neutonml_neuton_obj_t);
     self->base.type = &neutonml_neuton_type;
 
+    float *f;
+    f = bufinfo.buf;
+    printf("Neuton: Constructing buffer from %c [%f %f %f %f %f %f %f %f]",
+        (char)bufinfo.typecode, (double)f[0], (double)f[1], (double)f[2],
+        (double)f[3], (double)f[4], (double)f[5], (double)f[6],
+        (double)f[7]);
+
     shared_module_neutonml_neuton_construct(self, (float *)bufinfo.buf,
         bufinfo.len);
     return MP_OBJ_FROM_PTR(self);
