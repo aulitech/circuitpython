@@ -29,7 +29,7 @@ STATIC mp_obj_t neutonml_neuton_make_new(const mp_obj_type_t *type,
 
     float *f;
     f = bufinfo.buf;
-    printf("Neuton: Constructing buffer from %c [%f %f %f %f %f %f %f %f]",
+    printf("Neuton: Constructing buffer from %c [%f %f %f %f %f %f %f %f]\n",
         (char)bufinfo.typecode, (double)f[0], (double)f[1], (double)f[2],
         (double)f[3], (double)f[4], (double)f[5], (double)f[6],
         (double)f[7]);
@@ -69,13 +69,14 @@ MP_PROPERTY_GETTER(neutonml_neuton_inputs_count_obj,
 
 STATIC mp_obj_t neutonml_neuton_obj_set_inputs(mp_obj_t self_in,
     mp_obj_t inputs) {
-    neutonml_neuton_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    size_t len;
     int status = 0;
-    mp_obj_t *items;
-    mp_obj_get_array(inputs, &len, &items);
+    neutonml_neuton_obj_t *self = MP_OBJ_TO_PTR(self_in);
+
+    mp_buffer_info_t bufinfo;
+    mp_get_buffer_raise(inputs, &bufinfo, MP_BUFFER_WRITE);
+
     status =
-        shared_module_neutonml_neuton_model_set_inputs(self, (input_t *)&items);
+        shared_module_neutonml_neuton_model_set_inputs(self, (input_t *)bufinfo.buf);
     return mp_obj_new_int((mp_int_t)status);
 }
 MP_DEFINE_CONST_FUN_OBJ_2(neutonml_neuton_set_inputs_obj,
