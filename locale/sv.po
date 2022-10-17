@@ -67,6 +67,11 @@ msgstr " utdata:\n"
 msgid "%%c requires int or char"
 msgstr "%%c kräver int eller char"
 
+#: main.c
+#, c-format
+msgid "%02X"
+msgstr ""
+
 #: shared-bindings/rgbmatrix/RGBMatrix.c
 #, c-format
 msgid ""
@@ -159,14 +164,6 @@ msgstr "%q måste vara <= %d"
 #: py/argcheck.c
 msgid "%q must be >= %d"
 msgstr "%q måste vara >= %d"
-
-#: py/argcheck.c
-msgid "%q must be >= 0"
-msgstr "%q måste vara >= 0"
-
-#: shared-bindings/vectorio/Circle.c shared-bindings/vectorio/Rectangle.c
-msgid "%q must be >= 1"
-msgstr "%q måste vara >= 1"
 
 #: shared-bindings/analogbufio/BufferedIn.c
 #: shared-bindings/audiocore/RawSample.c
@@ -926,8 +923,7 @@ msgstr "Fel i regex"
 msgid "Error: Failure to bind"
 msgstr "Fel: Bind misslyckades"
 
-#: ports/raspberrypi/bindings/rp2pio/StateMachine.c py/enum.c
-#: shared-bindings/_bleio/__init__.c shared-bindings/aesio/aes.c
+#: py/enum.c shared-bindings/_bleio/__init__.c shared-bindings/aesio/aes.c
 #: shared-bindings/alarm/__init__.c shared-bindings/busio/SPI.c
 #: shared-bindings/microcontroller/Pin.c
 #: shared-bindings/neopixel_write/__init__.c
@@ -1265,6 +1261,7 @@ msgid "Invalid size"
 msgstr "Ogiltig storlek"
 
 #: ports/espressif/common-hal/ssl/SSLContext.c
+#: ports/raspberrypi/common-hal/ssl/SSLSocket.c
 msgid "Invalid socket for TLS"
 msgstr "Ogiltig socket för TLS"
 
@@ -1594,10 +1591,12 @@ msgid "Only 8 or 16 bit mono with "
 msgstr "Endast 8 eller 16 bitars mono med "
 
 #: ports/espressif/common-hal/wifi/__init__.c
+#: ports/raspberrypi/common-hal/wifi/__init__.c
 msgid "Only IPv4 addresses supported"
 msgstr "Endast IPv4-adresser stöds"
 
 #: ports/espressif/common-hal/socketpool/Socket.c
+#: ports/raspberrypi/common-hal/socketpool/Socket.c
 msgid "Only IPv4 sockets supported"
 msgstr "Endast IPv4-socket stöds"
 
@@ -1670,6 +1669,7 @@ msgid "Out of memory"
 msgstr "Slut på minne"
 
 #: ports/espressif/common-hal/socketpool/Socket.c
+#: ports/raspberrypi/common-hal/socketpool/Socket.c
 msgid "Out of sockets"
 msgstr "Slut på sockets"
 
@@ -1726,7 +1726,6 @@ msgid "Pin interrupt already in use"
 msgstr "Pinnavbrott används redan"
 
 #: shared-bindings/adafruit_bus_device/spi_device/SPIDevice.c
-#: shared-bindings/digitalio/DigitalInOut.c
 msgid "Pin is input only"
 msgstr "Pinnen är enbart ingång"
 
@@ -1951,6 +1950,7 @@ msgid "Slices not supported"
 msgstr "Slice stöds inte"
 
 #: ports/espressif/common-hal/socketpool/SocketPool.c
+#: ports/raspberrypi/common-hal/socketpool/SocketPool.c
 msgid "SocketPool can only be used with wifi.radio"
 msgstr "SocketPool kan endast användas med wifi.radio"
 
@@ -1973,10 +1973,6 @@ msgstr "Vänster stereokanal måste använda PWM kanal A"
 #: ports/raspberrypi/common-hal/audiopwmio/PWMAudioOut.c
 msgid "Stereo right must be on PWM channel B"
 msgstr "Höger stereokanal måste använda PWM kanal B"
-
-#: shared-bindings/multiterminal/__init__.c
-msgid "Stream missing readinto() or write() method."
-msgstr "Stream saknar readinto() eller write() metod."
 
 #: ports/mimxrt10xx/common-hal/busio/UART.c ports/stm/common-hal/busio/UART.c
 msgid "Supply at least one UART pin"
@@ -2130,6 +2126,10 @@ msgstr "UART omstart"
 #: ports/stm/common-hal/busio/UART.c
 msgid "UART write"
 msgstr "UART-skrivning"
+
+#: main.c
+msgid "UID:"
+msgstr ""
 
 #: shared-module/usb_hid/Device.c
 msgid "USB busy"
@@ -2395,10 +2395,6 @@ msgstr "__new__ arg måste vara en användartyp"
 #: extmod/modubinascii.c extmod/moduhashlib.c py/objarray.c
 msgid "a bytes-like object is required"
 msgstr "ett bytesliknande objekt krävs"
-
-#: shared-bindings/i2ctarget/I2CTarget.c
-msgid "address out of bounds"
-msgstr "adress utanför gränsen"
 
 #: shared-bindings/i2ctarget/I2CTarget.c
 msgid "addresses is empty"
@@ -2874,10 +2870,6 @@ msgid "destination buffer must be an array of type 'H' for bit_depth = 16"
 msgstr ""
 "destinationsbufferten måste vara en matris av typen 'H' för bit_depth = 16"
 
-#: shared-bindings/audiobusio/PDMIn.c
-msgid "destination_length must be an int >= 0"
-msgstr "destination_length måste vara ett heltal >= 0"
-
 #: py/objdict.c
 msgid "dict update sequence has wrong length"
 msgstr "uppdateringssekvensen för dict har fel längd"
@@ -3303,6 +3295,10 @@ msgstr "ogiltig arkitektur"
 msgid "invalid bits_per_pixel %d, must be, 1, 2, 4, 8, 16, 24, or 32"
 msgstr "ogiltig bits_per_pixel %d, måste vara, 1, 2, 4, 8, 16, 24 eller 32"
 
+#: ports/raspberrypi/common-hal/ssl/SSLSocket.c
+msgid "invalid cert"
+msgstr "ogiltigt certifikat"
+
 #: shared-bindings/bitmaptools/__init__.c
 #, c-format
 msgid "invalid element size %d for bits_per_pixel %d\n"
@@ -3328,6 +3324,10 @@ msgstr "ogiltig formatspecificerare"
 #: shared-bindings/wifi/Radio.c
 msgid "invalid hostname"
 msgstr "Ogiltigt värdnamn"
+
+#: ports/raspberrypi/common-hal/ssl/SSLSocket.c
+msgid "invalid key"
+msgstr "ogiltig nyckel"
 
 #: py/compile.c
 msgid "invalid micropython decorator"
@@ -3870,6 +3870,7 @@ msgstr "genom att trycka på VOLUME-knappen vid start.\n"
 
 #: ports/espressif/boards/adafruit_qtpy_esp32c3/mpconfigboard.h
 #: ports/espressif/boards/beetle-esp32-c3/mpconfigboard.h
+#: ports/espressif/boards/espressif_esp32s2_devkitc_1_n8r2/mpconfigboard.h
 #: ports/espressif/boards/lolin_c3_mini/mpconfigboard.h
 #: ports/espressif/boards/microdev_micro_c3/mpconfigboard.h
 #: supervisor/shared/safe_mode.c
@@ -4407,6 +4408,21 @@ msgstr "zi måste vara av typ float"
 #: extmod/ulab/code/scipy/signal/signal.c
 msgid "zi must be of shape (n_section, 2)"
 msgstr "zi måste vara i formen (n_section, 2)"
+
+#~ msgid "Stream missing readinto() or write() method."
+#~ msgstr "Stream saknar readinto() eller write() metod."
+
+#~ msgid "%q must be >= 0"
+#~ msgstr "%q måste vara >= 0"
+
+#~ msgid "%q must be >= 1"
+#~ msgstr "%q måste vara >= 1"
+
+#~ msgid "address out of bounds"
+#~ msgstr "adress utanför gränsen"
+
+#~ msgid "destination_length must be an int >= 0"
+#~ msgstr "destination_length måste vara ett heltal >= 0"
 
 #~ msgid "type object 'generator' has no attribute '__await__'"
 #~ msgstr "typobjekt 'generator' har inget attribut '__await__'"
@@ -5133,12 +5149,6 @@ msgstr "zi måste vara i formen (n_section, 2)"
 
 #~ msgid "can only save bytecode"
 #~ msgstr "kan bara spara bytecode"
-
-#~ msgid "invalid cert"
-#~ msgstr "ogiltigt certifikat"
-
-#~ msgid "invalid key"
-#~ msgstr "ogiltig nyckel"
 
 #~ msgid "Viper functions don't currently support more than 4 arguments"
 #~ msgstr "Viper-funktioner stöder för närvarande inte mer än fyra argument"

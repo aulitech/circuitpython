@@ -821,6 +821,16 @@ socketpool_socket_obj_t *common_hal_socketpool_socket_accept(socketpool_socket_o
 
     MICROPY_PY_LWIP_EXIT
 
+    DEBUG_printf("registering socket in socketpool_socket_accept()\n");
+    if (!register_open_socket(socket2)) {
+        DEBUG_printf("collecting garbage to open socket\n");
+        gc_collect();
+        if (!register_open_socket(socket2)) {
+            mp_raise_RuntimeError(translate("Out of sockets"));
+        }
+    }
+    mark_user_socket(socket2);
+
     // output values
     memcpy(ip, &(socket2->pcb.tcp->remote_ip), NETUTILS_IPV4ADDR_BUFSIZE);
     *port = (mp_uint_t)socket2->pcb.tcp->remote_port;
@@ -1070,13 +1080,16 @@ int socketpool_socket_recv_into(socketpool_socket_obj_t *socket,
             ret = lwip_raw_udp_receive(socket, (byte *)buf, len, NULL, NULL, &_errno);
             break;
     }
+    if (ret == (unsigned)-1) {
+        return -_errno;
+    }
     return ret;
 }
 
 mp_uint_t common_hal_socketpool_socket_recv_into(socketpool_socket_obj_t *self, const uint8_t *buf, uint32_t len) {
     int received = socketpool_socket_recv_into(self, buf, len);
     if (received < 0) {
-        mp_raise_OSError(received);
+        mp_raise_OSError(-received);
     }
     return received;
 }

@@ -1,9 +1,9 @@
 /*
- * This file is part of the Micro Python project, http://micropython.org/
+ * This file is part of the MicroPython project, http://micropython.org/
  *
  * The MIT License (MIT)
  *
- * SPDX-FileCopyrightText: Copyright (c) 2013-2015 Damien P. George
+ * Copyright (c) 2019 Scott Shawcroft for Adafruit Industries
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,16 +23,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#ifndef MICROPY_INCLUDED_PY_IOCTL_H
-#define MICROPY_INCLUDED_PY_IOCTL_H
 
-#define MP_IOCTL_POLL (0x100 | 1)
+// Micropython setup
 
-// These values are compatible with Linux, which are in turn
-// compatible with iBCS2 spec.
-#define MP_IOCTL_POLL_RD  (0x0001)
-#define MP_IOCTL_POLL_WR  (0x0004)
-#define MP_IOCTL_POLL_ERR (0x0008)
-#define MP_IOCTL_POLL_HUP (0x0010)
+#define MICROPY_HW_BOARD_NAME       "ESP32-S2-DevKitC-1-N8R2"
+#define MICROPY_HW_MCU_NAME         "ESP32S2"
 
-#endif  // MICROPY_INCLUDED_PY_IOCTL_H
+#define MICROPY_HW_NEOPIXEL         (&pin_GPIO18)
+
+#define CIRCUITPY_BOOT_BUTTON       (&pin_GPIO0)
+
+#define DEFAULT_UART_BUS_RX         (&pin_GPIO44)
+#define DEFAULT_UART_BUS_TX         (&pin_GPIO43)
+
+#define BOARD_USER_SAFE_MODE_ACTION translate("pressing boot button at start up.\n")

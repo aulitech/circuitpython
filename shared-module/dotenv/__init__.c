@@ -29,6 +29,7 @@
 
 #include "shared-bindings/dotenv/__init__.h"
 
+#include "py/misc.h"
 #include "py/mpstate.h"
 #include "py/objstr.h"
 #include "supervisor/filesystem.h"
@@ -124,7 +125,7 @@ STATIC bool key_matches(file_arg *active_file, const char *key) {
             // Still on tentative key; see if it matches the next supplied key character,
             // but don't run off the end of the supplied key.
             if (key_pos < key_len) {
-                matches = matches && key[key_pos] == character;
+                matches = matches && (unsigned char)key[key_pos] == character;
                 escaped = false;
                 key_pos++;
             } else {
@@ -137,7 +138,7 @@ STATIC bool key_matches(file_arg *active_file, const char *key) {
     if (character == '=' || character == '\n' || character == '#' || character == 0) {
         // Rewind one so the value, if any, can be found.
         seek_minus_one(active_file);
-    } else {
+    } else if (!unichar_isspace(character)) {
         // We're followed by something else that is invalid syntax.
         matches = false;
     }
@@ -272,10 +273,17 @@ mp_obj_t common_hal_dotenv_get_key(const char *path, const char *key) {
         return mp_const_none;
     }
     if ((size_t)actual_len >= sizeof(value)) {
-        mp_obj_str_t *str = MP_OBJ_TO_PTR(mp_obj_new_str_copy(&mp_type_str, NULL, actual_len + 1));
-        dotenv_get_key(path, key, (char *)str->data, actual_len + 1);
-        str->hash = qstr_compute_hash(str->data, actual_len);
-        return MP_OBJ_FROM_PTR(str);
+        byte *buf = m_new(byte, actual_len + 1);
+        dotenv_get_key(path, key, (char *)buf, actual_len);
+        buf[actual_len] = 0;
+
+        mp_obj_str_t *o = m_new_obj(mp_obj_str_t);
+        o->base.type = &mp_type_str;
+        o->len = actual_len;
+        o->data = buf;
+        o->hash = qstr_compute_hash(buf, actual_len);
+
+        return MP_OBJ_FROM_PTR(o);
     }
     return mp_obj_new_str(value, actual_len);
 }

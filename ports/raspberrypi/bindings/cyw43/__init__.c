@@ -35,6 +35,12 @@
 
 static int power_management_value = PM_DISABLED;
 
+void cyw43_enter_deep_sleep(void) {
+#define WL_REG_ON 23
+    gpio_set_dir(WL_REG_ON, GPIO_OUT);
+    gpio_put(WL_REG_ON, false);
+}
+
 void bindings_cyw43_wifi_enforce_pm() {
     cyw43_wifi_pm(&cyw43_state, power_management_value);
 }
@@ -125,7 +131,7 @@ const mcu_pin_obj_t *validate_obj_is_free_pin_including_cyw43(mp_obj_t obj) {
 
 STATIC const mp_rom_map_elem_t cyw43_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_cyw43) },
-    { MP_ROM_QSTR(MP_QSTR_CywPin), MP_ROM_QSTR(MP_QSTR_CywPin) },
+    { MP_ROM_QSTR(MP_QSTR_CywPin), MP_ROM_PTR(&cyw43_pin_type) },
     { MP_ROM_QSTR(MP_QSTR_set_power_management), &cyw43_set_power_management_obj },
     { MP_ROM_QSTR(MP_QSTR_get_power_management), &cyw43_get_power_management_obj },
     { MP_ROM_QSTR(MP_QSTR_PM_STANDARD), MP_ROM_INT(PM_STANDARD) },

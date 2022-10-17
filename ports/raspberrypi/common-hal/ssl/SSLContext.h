@@ -3,7 +3,8 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Scott Shawcroft for Adafruit Industries
+ * Copyright (c) 2020 Scott Shawcroft for Adafruit Industries
+ * Copyright (c) 2022 Jeff Epler for Adafruit Industries
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +25,16 @@
  * THE SOFTWARE.
  */
 
-#ifndef SHARED_BINDINGS_MULTITERMINAL___INIT___H
-#define SHARED_BINDINGS_MULTITERMINAL___INIT___H
+#pragma once
 
 #include "py/obj.h"
+#include "mbedtls/ssl.h"
 
-void common_hal_multiterminal_schedule_secondary_terminal_read(mp_obj_t socket);
-mp_obj_t common_hal_multiterminal_get_secondary_terminal();
-void common_hal_multiterminal_set_secondary_terminal(mp_obj_t secondary_terminal);
-void common_hal_multiterminal_clear_secondary_terminal();
-
-#endif  // SHARED_BINDINGS_MULTITERMINAL___INIT___H
+typedef struct {
+    mp_obj_base_t base;
+    bool check_name, use_global_ca_store;
+    const unsigned char *cacert_buf;
+    size_t cacert_bytes;
+    int (*crt_bundle_attach)(mbedtls_ssl_config *conf);
+    mp_buffer_info_t cert_buf, key_buf;
+} ssl_sslcontext_obj_t;
