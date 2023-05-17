@@ -322,3 +322,9 @@
 [submodule "lib/mbedtls"]
 	path = lib/mbedtls
 	url = https://github.com/ARMmbed/mbedtls.git
+[submodule "Neuton"]
+	path = Neuton
+	url = https://github.com/aulitech/Neuton.git
+[submodule "lib/Neuton"]
+	path = lib/Neuton
+	url = https://github.com/aulitech/Neuton.git
